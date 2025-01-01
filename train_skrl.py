@@ -14,8 +14,7 @@ python train_skrl.py --headless --num_envs 512 --video --video_interval 20000 --
 python train_skrl.py --headless --num_envs 1024 --video --video_interval 20000 --checkpoint /home/norest/projects/ainex/ainex/logs/skrl/h1_rough/2024-12-30_13-39-11_ppo_torch/checkpoints/agent_20000.pt
 
 
-python train_skrl.py --headless --num_envs 1024 --video --video_interval 20000 --checkpoint /home/norest/projects/ainex/ainex/logs/skrl/h1_rough/2024-12-30_13-39-11_ppo_torch/checkpoints/agent_20000.pt
-
+python train_skrl.py --headless --num_envs 1024 --video --video_length 1000 --video_interval 30000
 """
 
 
