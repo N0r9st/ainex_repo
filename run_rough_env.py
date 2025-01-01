@@ -48,9 +48,10 @@ def main():
             # reset
             # sample random actions
             joint_efforts = torch.randn_like(env.action_manager.action)
+            print(joint_efforts)
             # step the environment
             obs, rew, terminated, truncated, info = env.step(joint_efforts)
-            print(obs)
+            
             # print current orientation of pole
             # print(f"reward: {rew}, tr: {truncated}, 'tm: {terminated}, eff: {joint_efforts}")
             

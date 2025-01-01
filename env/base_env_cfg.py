@@ -138,7 +138,7 @@ from ainex_cfg import joint_names as ALL_JOINT_NAMES
 class ActionsCfg:
     """Action specifications for the MDP."""
 
-    joint_pos = mdp.JointPositionActionCfg(asset_name="robot", joint_names=ALL_JOINT_NAMES, scale=.2, use_default_offset=True)
+    joint_pos = mdp.JointPositionActionCfg(asset_name="robot", joint_names=ALL_JOINT_NAMES, scale=1.5, use_default_offset=True)
     # joint_pos = mdp.JointEffortActionCfg(
     #     asset_name="robot", 
     #     joint_names=ALL_JOINT_NAMES, 
