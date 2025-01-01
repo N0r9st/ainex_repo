@@ -75,14 +75,14 @@ for elem in joint_names:
             joint_names_expr=[elem],
             effort_limit=400.0,
             velocity_limit=100.0,
-            stiffness=0.0,
+            stiffness=40.0,
             damping=10.0,
         )
 
 
 AINEX_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
-        usd_path=f"/home/norest/projects/ainex/ainex_usd/ainex.usd",
+        usd_path=f"./ainex.usd",
         # rigid_props=sim_utils.RigidBodyPropertiesCfg(
         #     rigid_body_enabled=True,
         #     max_linear_velocity=1000.0,
@@ -105,7 +105,7 @@ AINEX_CFG = ArticulationCfg(
             angular_damping=0.0,
             max_linear_velocity=1000.0,
             max_angular_velocity=1000.0,
-            max_depenetration_velocity=1.0,
+            max_depenetration_velocity=100.0,
         ),
         articulation_props=sim_utils.ArticulationRootPropertiesCfg(
             enabled_self_collisions=False, solver_position_iteration_count=8, solver_velocity_iteration_count=4

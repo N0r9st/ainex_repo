@@ -31,6 +31,7 @@ if __name__ == '__main__':
     # launch omniverse app
     app_launcher = AppLauncher(args_cli)
     simulation_app = app_launcher.app
+    from omni.isaac.lab_tasks.utils.wrappers.skrl import SkrlVecEnvWrapper
 
     """Rest everything follows."""
 
@@ -75,7 +76,7 @@ def run_simulator(sim: sim_utils.SimulationContext, scene: InteractiveScene):
     # Simulation loop
     while simulation_app.is_running():
         # Reset
-        if count % 100 == 0:
+        if count % 300 == 0:
             # reset counter
             count = 0
             # reset the scene entities
@@ -93,12 +94,13 @@ def run_simulator(sim: sim_utils.SimulationContext, scene: InteractiveScene):
             scene.reset()
             print("[INFO]: Resetting robot state...")
         # Apply random action
-        # # -- generate random joint efforts
-        # efforts = torch.randn_like(robot.data.joint_pos) * 0.0
-        # # -- apply action to the robot
+        # -- generate random joint efforts
+        efforts = torch.randn_like(robot.data.joint_pos) * 1
+        # -- apply action to the robot
         # robot.set_joint_effort_target(efforts)
-        # # -- write data to sim
-        # scene.write_data_to_sim()
+        robot.set_joint_position_target(efforts)
+        # -- write data to sim
+        scene.write_data_to_sim()
         # Perform step
         sim.step()
         # Increment counter

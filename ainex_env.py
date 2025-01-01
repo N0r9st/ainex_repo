@@ -17,7 +17,7 @@ from omni.isaac.lab.app import AppLauncher
 
 # add argparse arguments
 parser = argparse.ArgumentParser(description="Tutorial on creating a cartpole base environment.")
-parser.add_argument("--num_envs", type=int, default=16, help="Number of environments to spawn.")
+parser.add_argument("--num_envs", type=int, default=1, help="Number of environments to spawn.")
 
 # append AppLauncher cli args
 AppLauncher.add_app_launcher_args(parser)
@@ -52,7 +52,7 @@ class ActionsCfg:
     joint_efforts = mdp.JointEffortActionCfg(
         asset_name="robot", 
         joint_names=ALL_JOINT_NAMES, 
-        scale=.0)
+        scale=1)
 
 
 @configclass
