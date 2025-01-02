@@ -103,7 +103,7 @@ def main():
 
     with open('agents/cfg.yaml', 'r') as f:
         experiment_cfg = yaml.safe_load(f)
-        
+
     # try:
     #     experiment_cfg = load_cfg_from_registry(args_cli.task, f"skrl_{algorithm}_cfg_entry_point")
     # except ValueError:
@@ -123,7 +123,7 @@ def main():
     log_dir = os.path.dirname(os.path.dirname(resume_path))
 
     # create isaac environment
-    env = ManagerBasedRLEnv(H1RoughEnvCfg())
+    env = ManagerBasedRLEnv(H1RoughEnvCfg_PLAY(), render_mode='rgb_array')
     # wrap for video recording
     if args_cli.video:
         video_kwargs = {
