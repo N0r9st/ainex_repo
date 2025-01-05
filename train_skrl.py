@@ -116,14 +116,15 @@ agent_cfg_entry_point = "skrl_cfg_entry_point" if algorithm in ["ppo"] else f"sk
 # def main(env_cfg: ManagerBasedRLEnvCfg | DirectRLEnvCfg | DirectMARLEnvCfg, agent_cfg: dict):
 
 from env.rough_cfg import H1RoughEnvCfg_PLAY, H1RoughEnvCfg
+from env.flat_cfg import H1FlatEnvCfg
 from omni.isaac.lab.envs import ManagerBasedRLEnv
 import yaml
 def main():
     """Train with stable-baselines agent."""
-    env_cfg = H1RoughEnvCfg()
+    env_cfg = H1FlatEnvCfg()# H1RoughEnvCfg()
     with open('agents/cfg.yaml', 'r') as f:
         agent_cfg = yaml.safe_load(f)
-        
+
     """Train with skrl agent."""
     # override configurations with non-hydra CLI arguments
     env_cfg.scene.num_envs = args_cli.num_envs if args_cli.num_envs is not None else env_cfg.scene.num_envs
@@ -194,7 +195,7 @@ def main():
     # configure and instantiate the skrl runner
     # https://skrl.readthedocs.io/en/latest/api/utils/runner.html
     runner = Runner(env, agent_cfg)
-    
+
     if args_cli.checkpoint is not None:
         print(f'Loading {args_cli.checkpoint} checkpoint.')
         runner.agent.load(args_cli.checkpoint)

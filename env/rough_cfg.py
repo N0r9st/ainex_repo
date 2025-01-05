@@ -109,17 +109,13 @@ class H1RoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.rewards.undesired_contacts = None
         self.rewards.flat_orientation_l2.weight = -1.0
         self.rewards.dof_torques_l2.weight = 0.0
-        self.rewards.action_rate_l2.weight = -0.0015
-        self.rewards.dof_acc_l2.weight = -1.25e-7
+        self.rewards.action_rate_l2.weight = -0.01
+        self.rewards.dof_acc_l2.weight = -2.25e-6
 
         # Commands
-        self.commands.base_velocity.ranges.lin_vel_x = (0.0, 1.0)
+        self.commands.base_velocity.ranges.lin_vel_x = (0.0, .7)
         self.commands.base_velocity.ranges.lin_vel_y = (0.0, 0.0)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
-
-        # terminations
-        self.terminations.base_contact.params["sensor_cfg"].body_names = ".*base_link"
-
 
 
 @configclass
@@ -135,10 +131,10 @@ class H1RoughEnvCfg_PLAY(H1RoughEnvCfg):
         # spawn the robot randomly in the grid (instead of their terrain levels)
         self.scene.terrain.max_init_terrain_level = None
         # reduce the number of terrains to save memory
-        # if self.scene.terrain.terrain_generator is not None:
-        #     self.scene.terrain.terrain_generator.num_rows = 5
-        #     self.scene.terrain.terrain_generator.num_cols = 5
-        #     self.scene.terrain.terrain_generator.curriculum = False
+        if self.scene.terrain.terrain_generator is not None:
+            self.scene.terrain.terrain_generator.num_rows = 5
+            self.scene.terrain.terrain_generator.num_cols = 5
+            self.scene.terrain.terrain_generator.curriculum = False
 
         self.commands.base_velocity.ranges.lin_vel_x = (1.0, 1.0)
         self.commands.base_velocity.ranges.lin_vel_y = (0.0, 0.0)

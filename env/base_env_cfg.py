@@ -89,7 +89,26 @@ class MySceneCfg(InteractiveSceneCfg):
     """Configuration for a ainex scene."""
 
     # ground plane
-    terrain = AssetBaseCfg(prim_path="/World/ground", spawn=sim_utils.GroundPlaneCfg())
+    # terrain = AssetBaseCfg(prim_path="/World/ground", spawn=sim_utils.GroundPlaneCfg())
+    terrain = TerrainImporterCfg(
+        prim_path="/World/ground",
+        terrain_type="generator",
+        terrain_generator=ROUGH_TERRAINS_CFG.replace(size=(4.0,4.0)),
+        max_init_terrain_level=5,
+        collision_group=-1,
+        physics_material=sim_utils.RigidBodyMaterialCfg(
+            friction_combine_mode="multiply",
+            restitution_combine_mode="multiply",
+            static_friction=1.0,
+            dynamic_friction=1.0,
+        ),
+        visual_material=sim_utils.MdlFileCfg(
+            mdl_path=f"{ISAACLAB_NUCLEUS_DIR}/Materials/TilesMarbleSpiderWhiteBrickBondHoned/TilesMarbleSpiderWhiteBrickBondHoned.mdl",
+            project_uvw=True,
+            texture_scale=(0.25, 0.25),
+        ),
+        debug_vis=False,
+    )
 
     # lights
     dome_light = AssetBaseCfg(
@@ -98,7 +117,7 @@ class MySceneCfg(InteractiveSceneCfg):
 
     # articulation
     robot: ArticulationCfg = AINEX_CFG.replace(prim_path="{ENV_REGEX_NS}/Robot")
-    
+
     height_scanner = RayCasterCfg(
         prim_path="{ENV_REGEX_NS}/Robot/base",
         offset=RayCasterCfg.OffsetCfg(pos=(0.0, 0.0, 20.0)),
@@ -107,10 +126,10 @@ class MySceneCfg(InteractiveSceneCfg):
         debug_vis=False,
         mesh_prim_paths=["/World/ground"],
     )
-    
+
     contact_forces = ContactSensorCfg(prim_path="{ENV_REGEX_NS}/Robot/.*", history_length=3, track_air_time=True)
 
-    
+
 ##
 # MDP settings
 ##
@@ -140,8 +159,8 @@ class ActionsCfg:
 
     joint_pos = mdp.JointPositionActionCfg(asset_name="robot", joint_names=ALL_JOINT_NAMES, scale=1.5, use_default_offset=True)
     # joint_pos = mdp.JointEffortActionCfg(
-    #     asset_name="robot", 
-    #     joint_names=ALL_JOINT_NAMES, 
+    #     asset_name="robot",
+    #     joint_names=ALL_JOINT_NAMES,
     #     scale=1)
 
 
@@ -324,7 +343,7 @@ class LocomotionVelocityRoughEnvCfg(ManagerBasedRLEnvCfg):
     rewards: RewardsCfg = RewardsCfg()
     terminations: TerminationsCfg = TerminationsCfg()
     events: EventCfg = EventCfg()
-    # curriculum: CurriculumCfg = CurriculumCfg()
+    curriculum: CurriculumCfg = CurriculumCfg()
 
     def __post_init__(self):
         """Post initialization."""
@@ -335,9 +354,9 @@ class LocomotionVelocityRoughEnvCfg(ManagerBasedRLEnvCfg):
         self.sim.dt = 0.005
         self.sim.render_interval = self.decimation
         self.sim.disable_contact_processing = True
-        
-        
-        if False:
+
+
+        if True:
             self.sim.physics_material = self.scene.terrain.physics_material
         # update sensor update periods
         # we tick all the sensors based on the smallest update period (physics update period)
@@ -346,7 +365,7 @@ class LocomotionVelocityRoughEnvCfg(ManagerBasedRLEnvCfg):
         if self.scene.contact_forces is not None:
             self.scene.contact_forces.update_period = self.sim.dt
 
-        if False:
+        if True:
             # check if terrain levels curriculum is enabled - if so, enable curriculum for terrain generator
             # this generates terrains with increasing difficulty and is useful for training
             if getattr(self.curriculum, "terrain_levels", None) is not None:
