@@ -73,8 +73,8 @@ actuators = {}
 for elem in joint_names:
     actuators[elem + '_actuator'] = ImplicitActuatorCfg(
             joint_names_expr=[elem],
-            effort_limit=400.0,
-            velocity_limit=5.0,
+            effort_limit=100.0,
+            velocity_limit=4.0,
             stiffness=40.0,
             damping=10.0,
         )

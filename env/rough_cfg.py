@@ -37,11 +37,11 @@ class H1Rewards(RewardsCfg):
     )
     feet_air_time = RewTerm(
         func=mdp.feet_air_time_positive_biped,
-        weight=0.125,
+        weight=0.5,
         params={
             "command_name": "base_velocity",
             "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*_ank_roll_link"),
-            "threshold": 0.4,
+            "threshold": 0.5,
         },
     )
     feet_slide = RewTerm(
