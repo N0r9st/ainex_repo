@@ -18,7 +18,7 @@ from .base_env_cfg import LocomotionVelocityRoughEnvCfg, RewardsCfg
 ##
 # Pre-defined configs
 ##
-from ainex_cfg import AINEX_CFG  # isort: skip
+from ainex_cfg import AINEX_COLLISION_CFG as AINEX_CFG  # isort: skip
 
 
 @configclass
@@ -113,7 +113,7 @@ class H1RoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.rewards.dof_acc_l2.weight = -2.25e-6
 
         # Commands
-        self.commands.base_velocity.ranges.lin_vel_x = (0.0, .7)
+        self.commands.base_velocity.ranges.lin_vel_x = (0.0, 1.)
         self.commands.base_velocity.ranges.lin_vel_y = (0.0, 0.0)
         self.commands.base_velocity.ranges.ang_vel_z = (-1.0, 1.0)
 
